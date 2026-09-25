@@ -22,11 +22,9 @@ public class StageController : MonoBehaviour
     bool clueFound;
     bool hasPrinted;
 
-    void Awake()
-    {
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
-        Instance = this;
-    }
+    // Newest wins: after a Restart reload the fresh controller takes over even if the old one's
+    // OnDestroy has not run yet, and the old one only clears Instance if it still owns it.
+    void Awake() => Instance = this;
 
     void Start()
     {
