@@ -13,6 +13,7 @@ public class StageController : MonoBehaviour
 
     public StageState State { get; private set; } = StageState.Crossing;
     bool clueFound;
+    bool hasPrinted;
 
     void Awake()
     {
@@ -53,6 +54,10 @@ public class StageController : MonoBehaviour
 
     public void OnArrivalReached()
     {
+        if (hasPrinted || !clueFound) return;       // prevents repeat triggers
+        hasPrinted = true;
+        State = StageState.Printed;
+        Debug.Log("Arrival reached");
     }
 
     public void Restart()
