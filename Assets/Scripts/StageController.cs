@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum StageState { Crossing, Clue, Arrival, Printed }
 
@@ -26,6 +27,11 @@ public class StageController : MonoBehaviour
     {
         exitBlocker.enabled = true;
         plate.SetOchreVisible(false);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R)) Restart();
     }
 
     void OnDestroy()
@@ -62,7 +68,9 @@ public class StageController : MonoBehaviour
         plate.StampOchre();
     }
 
+    // Full reload over a hand-written reset: fewer failure modes for a clean second run.
     public void Restart()
     {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
