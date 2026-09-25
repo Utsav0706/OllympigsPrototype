@@ -19,6 +19,11 @@ public class StageController : MonoBehaviour
         Instance = this;
     }
 
+    void Start()
+    {
+        exitBlocker.enabled = true;
+    }
+
     void OnDestroy()
     {
         if (Instance == this) Instance = null;
