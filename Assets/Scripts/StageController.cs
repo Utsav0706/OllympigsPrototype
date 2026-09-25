@@ -25,6 +25,7 @@ public class StageController : MonoBehaviour
 
     public void OnPanelExit(int fromPanel)
     {
+        Debug.Log($"Panel {fromPanel} exit reached");
     }
 
     public void OnClueFound(string poemLine)
