@@ -8,6 +8,7 @@ public class StageController : MonoBehaviour
 
     [SerializeField] PlayerController2D player;
     [SerializeField] CameraRig cameraRig;
+    [SerializeField] PrintPlate plate;
     [SerializeField] Collider2D exitBlocker;      // panel 02 exit, ON at start
     [SerializeField] Transform[] panelEntryPoints; // 0,1,2
 
@@ -24,6 +25,7 @@ public class StageController : MonoBehaviour
     void Start()
     {
         exitBlocker.enabled = true;
+        plate.SetOchreVisible(false);
     }
 
     void OnDestroy()
@@ -57,7 +59,7 @@ public class StageController : MonoBehaviour
         if (hasPrinted || !clueFound) return;       // prevents repeat triggers
         hasPrinted = true;
         State = StageState.Printed;
-        Debug.Log("Arrival reached");
+        plate.StampOchre();
     }
 
     public void Restart()
