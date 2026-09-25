@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +13,7 @@ public class StageController : MonoBehaviour
     [SerializeField] PrintPlate plate;
     [SerializeField] Collider2D exitBlocker;      // panel 02 exit, ON at start
     [SerializeField] Transform[] panelEntryPoints; // 0,1,2
+    [SerializeField] float cutFreeze = 0.2f;       // seconds of no input after a panel cut
 
     public StageState State { get; private set; } = StageState.Crossing;
     bool clueFound;
@@ -47,8 +49,18 @@ public class StageController : MonoBehaviour
 
         player.WarpTo(panelEntryPoints[next].position);
         cameraRig.CutToPanel(next);
+        StartCoroutine(FreezeInput(cutFreeze));
 
         if (next == 1) State = StageState.Clue;
+    }
+
+    // A beat of stillness after the cut so the eye can read the new panel
+    // before she moves, and a held key doesn't carry her straight on.
+    IEnumerator FreezeInput(float seconds)
+    {
+        player.InputEnabled = false;
+        yield return new WaitForSeconds(seconds);
+        if (State != StageState.Printed) player.InputEnabled = true;
     }
 
     public void OnClueFound(string poemLine)
