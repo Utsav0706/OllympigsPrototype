@@ -25,7 +25,12 @@ public class StageController : MonoBehaviour
 
     public void OnPanelExit(int fromPanel)
     {
-        Debug.Log($"Panel {fromPanel} exit reached");
+        int next = fromPanel + 1;
+        if (next >= panelEntryPoints.Length) return;
+
+        player.WarpTo(panelEntryPoints[next].position);
+
+        if (next == 1) State = StageState.Clue;
     }
 
     public void OnClueFound(string poemLine)
