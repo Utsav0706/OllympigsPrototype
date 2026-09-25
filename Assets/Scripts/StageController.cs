@@ -15,6 +15,8 @@ public class StageController : MonoBehaviour
     [SerializeField] Collider2D exitBlocker;      // panel 02 exit, ON at start
     [SerializeField] Transform[] panelEntryPoints; // 0,1,2
     [SerializeField] float cutFreeze = 0.2f;       // seconds of no input after a panel cut
+    [Tooltip("Hold Ollypig still once the Ochre prints. Untick only to test that walking out of the arrival trigger and back in cannot stamp twice.")]
+    [SerializeField] bool freezeOnPrint = true;
 
     public StageState State { get; private set; } = StageState.Crossing;
     bool clueFound;
@@ -90,6 +92,7 @@ public class StageController : MonoBehaviour
         if (hasPrinted || !clueFound) return;       // prevents repeat triggers
         hasPrinted = true;
         State = StageState.Printed;
+        if (freezeOnPrint) player.InputEnabled = false;   // she stops dead; R or the seal still restart
         plate.StampOchre();
         ui.ShowCompletion("FIRST IMPRESSION  ·  OCHRE");
         ui.SetObjective("Click the seal or press R to print again.");
