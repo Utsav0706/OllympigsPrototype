@@ -12,6 +12,7 @@ public class StageController : MonoBehaviour
     [SerializeField] Transform[] panelEntryPoints; // 0,1,2
 
     public StageState State { get; private set; } = StageState.Crossing;
+    bool clueFound;
 
     void Awake()
     {
@@ -33,6 +34,7 @@ public class StageController : MonoBehaviour
     {
         int next = fromPanel + 1;
         if (next >= panelEntryPoints.Length) return;
+        if (next == 2 && !clueFound) return;        // gate, belt and braces
 
         player.WarpTo(panelEntryPoints[next].position);
         cameraRig.CutToPanel(next);
@@ -42,6 +44,11 @@ public class StageController : MonoBehaviour
 
     public void OnClueFound(string poemLine)
     {
+        if (clueFound) return;                      // one-shot
+        clueFound = true;
+        State = StageState.Arrival;
+        exitBlocker.enabled = false;                // unlock the exit
+        Debug.Log($"Clue found: {poemLine}");
     }
 
     public void OnArrivalReached()
