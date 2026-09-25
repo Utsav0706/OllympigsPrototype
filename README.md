@@ -20,6 +20,9 @@ winners' podium — where the blue woodblock proof finally takes its first colou
 
 ## What is implemented
 
+Tokyo, five days before the Games: the cartouche reads **OLLYPIG SWINE · TOKYO · 5 DAYS TO THE GAMES**
+throughout, and each step's instruction appears in a scroll beneath it.
+
 Three sequential comic panels, cut between with hard camera cuts:
 
 1. **01 · The Crossing** — a top-down Shibuya scramble. The umbrella crowd walls off every line except the
@@ -48,7 +51,8 @@ State flow: `Crossing → Clue → Arrival → Printed`. Restart returns everyth
   the keyline layer, so the registration offset can never cover a line (verified: 100 % of keyline pixels
   survive a 0–2 px shift).
 - **The print is an abrupt renderer enable** — offset `OchreRoot`, then enable every Ochre renderer in the
-  same frame. No fade, lerp or tween anywhere.
+  same frame. No fade, lerp or tween anywhere. In that same frame the paper grain drops from 10 % to 4 %, so
+  the rough proof gives way to a crisper finished plate.
 - **Registration offset (0.02, −0.02)** — about 2 screen pixels at 1080p. Tested against 0.015–0.03:
   below 0.02 it vanishes in places, above 0.025 it reads as a drop shadow. Read as a **permanent
   misregistration** by default; untick `Retain Offset` on the PrintPlate for an offset that snaps into
@@ -59,8 +63,10 @@ State flow: `Crossing → Clue → Arrival → Printed`. Restart returns everyth
   second run is an acceptance criterion. The only static (`StageController.Instance`) is reload-safe.
 - **Colour is earned.** Before the clear, colour appears only on Ollypig (Safflower) and on active information
   (Beni Vermillion: the interact prompt and the restart seal). Ochre appears only on the stamp and its caption chip.
-- **Closed palette, one gradient.** Eight hexes (Moss Green reserved, unused). The only gradient is the bokashi
-  at the sky edge; post-processing is off, so nothing adds another.
+- **Closed palette, one gradient, no drop shadows.** Eight hexes (Moss Green reserved, unused). The only
+  gradient is the bokashi at the sky edge; post-processing is off, and nothing casts a shadow.
+- **Print UI.** Name in a cartouche, instructions and the poem in scrolls with rolled ends, restart as an
+  outlined seal, and the completion label set as a plate caption in the paper margin.
 - **Rain** is a quad with a URP Unlit material scrolled by `mainTextureOffset`, because URP 2D sprite shaders
   ignore texture offset. Two out-of-step gusts keep it from looking mechanical.
 - **Scripts** (`Assets/Scripts`): `StageController` (state, gating, single-fire), `PlayerController2D`,
@@ -103,8 +109,13 @@ About **7 h 10 min** by commit history (first commit 08:28, last 15:39 on 25 Sep
 ## Credits
 
 - **Original work:** all game code, and all art — paper and grain, scramble crossing, pavements, umbrellas,
-  city skyline and bokashi, shop front, note, podium, Ochre and keyline layers, Ollypig, UI plates, seal and
-  rain — created for this project, generated procedurally from the closed palette.
+  pedestrians, city skyline and bokashi, street markings, shop front, note, podium, Ochre and keyline layers,
+  Ollypig, print frames, UI plates, scrolls, seal and rain — created for this project, generated
+  procedurally from the closed palette.
+- **Placeholders:** all of the art above is **placeholder quality**, built to the palette and composition
+  rules to prove the pipeline, not final illustration. Ollypig in particular is a rough stand-in for the
+  character in the Art Direction Bible. `Assets/Art/Placeholder_Square.png` is the grey-box square and is
+  used only to tint the flat road and street blocks.
 - **Reused / licensed:** Unity 6 engine and packages (Universal RP, Input System, uGUI) under the Unity
   licence; UI text uses Unity's built-in LegacyRuntime font. No third-party art, audio or fonts.
 - **AI assistance:** Anthropic's Claude (Claude Code) was used throughout: writing and reviewing the C#
