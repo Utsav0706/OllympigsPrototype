@@ -8,7 +8,7 @@ public class PrintPlate : MonoBehaviour
 
     [Header("Registration")]
     [Tooltip("100 PPU: 1px = 0.01 world units")]
-    [SerializeField] Vector2 registrationOffset = new Vector2(0.015f, -0.015f);
+    [SerializeField] Vector2 registrationOffset = new Vector2(0.02f, -0.02f);   // ~2 screen px at 1080p: a misprint, not a shadow
     [Tooltip("True = permanent misregistration. False = offset settles after a beat.")]
     [SerializeField] bool retainOffset = true;
     [SerializeField] float settleDelay = 0.09f;
