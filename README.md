@@ -62,7 +62,7 @@ State flow: `Crossing → Clue → Arrival → Printed`. Restart returns everyth
 - **Restart reloads the scene.** A hand-written reset would be tidier but has more failure modes, and a clean
   second run is an acceptance criterion. The only static (`StageController.Instance`) is reload-safe.
 - **Colour is earned.** Before the clear, colour appears only on Ollypig (Safflower) and on active information
-  (Beni Vermillion: the interact prompt and the restart seal). Ochre appears only on the stamp and its caption chip.
+  (Beni Vermillion: the restart seal; the interact prompt is a Washi tag with a Sumi E). Ochre appears only on the stamp and its caption chip.
 - **Closed palette, one gradient, no drop shadows.** Eight hexes (Moss Green reserved, unused). The only
   gradient is the bokashi at the sky edge; post-processing is off, and nothing casts a shadow.
 - **Print UI.** Name in a cartouche, instructions and the poem in scrolls with rolled ends, restart as an
