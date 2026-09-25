@@ -11,6 +11,7 @@ public class StageController : MonoBehaviour
     [SerializeField] PlayerController2D player;
     [SerializeField] CameraRig cameraRig;
     [SerializeField] PrintPlate plate;
+    [SerializeField] StageUI ui;
     [SerializeField] Collider2D exitBlocker;      // panel 02 exit, ON at start
     [SerializeField] Transform[] panelEntryPoints; // 0,1,2
     [SerializeField] float cutFreeze = 0.2f;       // seconds of no input after a panel cut
@@ -29,6 +30,8 @@ public class StageController : MonoBehaviour
     {
         exitBlocker.enabled = true;
         plate.SetOchreVisible(false);
+        ui.SetCartouche("OLLYPIG SWINE");
+        ui.SetObjective("Use WASD to cross to the right side.");
     }
 
     void Update()
@@ -51,7 +54,16 @@ public class StageController : MonoBehaviour
         cameraRig.CutToPanel(next);
         StartCoroutine(FreezeInput(cutFreeze));
 
-        if (next == 1) State = StageState.Clue;
+        if (next == 1)
+        {
+            State = StageState.Clue;
+            ui.SetObjective("Walk to the note on the shop wall and press E.");
+        }
+        else if (next == 2)
+        {
+            ui.HideScroll();                        // keep the arrival panel clear for the stamp
+            ui.SetObjective("Step onto the podium.");
+        }
     }
 
     // A beat of stillness after the cut so the eye can read the new panel
@@ -69,7 +81,8 @@ public class StageController : MonoBehaviour
         clueFound = true;
         State = StageState.Arrival;
         exitBlocker.enabled = false;                // unlock the exit
-        Debug.Log($"Clue found: {poemLine}");
+        ui.ShowScroll(poemLine);
+        ui.SetObjective("The way is open. Keep going right.");
     }
 
     public void OnArrivalReached()
@@ -78,6 +91,8 @@ public class StageController : MonoBehaviour
         hasPrinted = true;
         State = StageState.Printed;
         plate.StampOchre();
+        ui.ShowCompletion("FIRST IMPRESSION  ·  OCHRE");
+        ui.SetObjective("Click the seal or press R to print again.");
     }
 
     // Full reload over a hand-written reset: fewer failure modes for a clean second run.
